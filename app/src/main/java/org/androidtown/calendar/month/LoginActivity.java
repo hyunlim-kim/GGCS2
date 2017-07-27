@@ -32,8 +32,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // 변수와 xml에서 component 찾아 연결
-        mEdtUserId = (EditText)findViewById(R.id.edtUserId);
-        mEdtUserPw = (EditText)findViewById(R.id.edtUserPw);
+        mEdtUserId = (EditText) findViewById(R.id.edtUserId);
+        mEdtUserPw = (EditText) findViewById(R.id.edtUserPw);
 
         // Button들에 대해 onClickListener 걸어주기
         mBtnLogin.setOnClickListener(btnClick);
@@ -45,9 +45,9 @@ public class LoginActivity extends AppCompatActivity {
     private View.OnClickListener btnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.btnLogin)   {
+            if (v.getId() == R.id.btnLogin) {
 
-            } else if ( v.getId() == R.id.btnJoin)  {
+            } else if (v.getId() == R.id.btnJoin) {
                 Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
                 LoginActivity.this.startActivity(intent);
             }
@@ -76,8 +76,8 @@ public class LoginActivity extends AppCompatActivity {
                 restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
 
                 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-                map.add("userId",userId);
-                map.add("userPw",userPw);
+                map.add("userId", userId);
+                map.add("userPw", userPw);
 
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 return restTemplate.postForObject(URL_LOGIN_PROC, request, String.class);
 
-            }   catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
@@ -94,8 +94,23 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            // 
-
+            //
+            Gson gson = new Gson();
+            try {
+                UserBean bean = gson.fromJson(s, UserBean.class);
+                if (bean != null)   {
+                    if (bean.getResult().equals("ok"))  {
+                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                        i.putExtra("UserBean",bean.getUserBean());
+                        startActivity(i);
+                    } else  {
+                        Toast.makeText(LoginActivity.this, bean.getResultMsg(), Toast.LENGTH_SHORT).show();
+                    }
+                } // try
+            }   catch (Exception e) {
+                Toast.makeText(LoginActivity.this, "파싱실패", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            } // catch
         } // onPostExecute()
 
     } // class LoginProcTask
