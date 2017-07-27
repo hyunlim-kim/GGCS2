@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class ExpenseActivity extends AppCompatActivity {
+public class ExpenseSecond extends AppCompatActivity {
 
     TextView dateView;
     int year;   //년
