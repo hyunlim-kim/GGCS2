@@ -57,6 +57,7 @@ public class CalendarMonthView extends GridView {
         setVerticalSpacing(1);
         setHorizontalSpacing(1);
 		setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
+
         
         // 칼럼의 갯수 설정
         setNumColumns(7);

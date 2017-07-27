@@ -1,9 +1,11 @@
 package org.androidtown.calendar.month;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.format.Time;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -147,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @author Mike
      */
-    public static class MonthItemView extends TextView {
+    public static class MonthItemView extends AppCompatTextView {
 
         private MonthItem item;
 
@@ -354,9 +356,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             // create a params
+            int screenHeight = ((Activity)mContext).getWindowManager().getDefaultDisplay().getHeight();
+            int columnHeight = screenHeight / getNumColumns();
+
             GridView.LayoutParams params = new GridView.LayoutParams(
                     GridView.LayoutParams.MATCH_PARENT,
-                    120);
+                    columnHeight);
 
             // calculate row and column
             int rowIndex = position / countColumn;
@@ -374,7 +379,11 @@ public class MainActivity extends AppCompatActivity {
 
             if (columnIndex == 0) {
                 itemView.setTextColor(Color.RED);
-            } else {
+            }
+            else if(columnIndex == 6){
+                itemView.setTextColor(Color.BLUE);
+            }
+            else {
                 itemView.setTextColor(Color.BLACK);
             }
 
@@ -451,7 +460,7 @@ public class MainActivity extends AppCompatActivity {
         /**
          * set selected row
          *
-         * @param selectedRow
+         * @param selectedPosition
          */
         public void setSelectedPosition(int selectedPosition) {
             this.selectedPosition = selectedPosition;
