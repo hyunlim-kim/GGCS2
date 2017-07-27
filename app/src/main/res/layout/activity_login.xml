@@ -31,7 +31,7 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/edtUserName"
+            android:id="@+id/edtUserId"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -56,7 +56,7 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/detUserPw"
+            android:id="@+id/edtUserPw"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
