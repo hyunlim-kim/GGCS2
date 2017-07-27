@@ -15,8 +15,8 @@ public interface OnDataSelectionListener {
 	 * 
 	 * @param parent Parent View
 	 * @param v Target View
-	 * @param row Row Index
-	 * @param column Column Index
+	 * @param position Row Index
+	 * @param position Column Index
 	 * @param id ID for the View
 	 */
 	public void onDataSelected(AdapterView parent, View v, int position, long id);
