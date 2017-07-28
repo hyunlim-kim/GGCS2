@@ -11,6 +11,8 @@ import android.text.format.Time;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -479,4 +481,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-}
+
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }//end onCreateOptionsMenu
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_add) {
+            Intent intent = new Intent(getApplicationContext(), ExpenseSecond.class);
+            startActivity(intent);
+            return super.onOptionsItemSelected(item);
+        }//end if
+        return true;
+    }//end onOptionsItemSelected
+
+}//end class

@@ -27,6 +27,10 @@
         </activity>
         <activity android:name=".JoinActivity">
         </activity>
+        <activity android:name=".ExpenseSecond">
+        </activity>
+        <activity android:name=".ExpenseFirst">
+        </activity>
     </application>
 
 </manifest>
