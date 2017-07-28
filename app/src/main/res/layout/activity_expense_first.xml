@@ -111,10 +111,6 @@
             android:orientation="horizontal"
             android:weightSum="0">
 
-            <ListView
-                android:id="@+id/user1_ListView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
         </LinearLayout>
 
         <LinearLayout
@@ -127,10 +123,6 @@
             android:orientation="horizontal"
             android:weightSum="0">
 
-            <ListView
-                android:id="@+id/user2_ListView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
         </LinearLayout>
 
     </LinearLayout>
