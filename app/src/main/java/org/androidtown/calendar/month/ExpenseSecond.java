@@ -7,15 +7,16 @@ import android.widget.TextView;
 public class ExpenseSecond extends AppCompatActivity {
 
     TextView dateView;
-    int year;   //년
-    int month;  //월
-    int date;   //일
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense_user1);
-    }
-}
+    } //onCreate 닫힘
+
+
+
+
+
+
+} //ExpenseSecond class 닫힘

@@ -1,6 +1,7 @@
 package org.androidtown.calendar.month;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // 변수 선언
     private EditText mEdtUserId, mEdtUserPw;
+
 
 
     @Override
