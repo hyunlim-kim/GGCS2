@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // 변수 선언
     private EditText mEdtUserId, mEdtUserPw;
-    private Button mBtnLogin, mBtnJoin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +36,8 @@ public class LoginActivity extends AppCompatActivity {
         mEdtUserPw = (EditText) findViewById(R.id.edtUserPw);
 
         // Button들에 대해 onClickListener 걸어주기
-        mBtnLogin.setOnClickListener(btnClick);
-        mBtnJoin.setOnClickListener(btnClick);
+        findViewById(R.id.btnLogin).setOnClickListener(btnClick);
+        findViewById(R.id.btnJoin).setOnClickListener(btnClick);
 
     } // onCreate
 
@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.btnLogin) {
+                new LoginProcTask().execute();
 
             } else if (v.getId() == R.id.btnJoin) {
                 Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
@@ -57,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     private class LoginProcTask extends AsyncTask<String, Void, String> {
 
         // URL_LOGIN_PROC 설정(자기 IP에 맞게 설정할 것!!!!!!!!!!)
-        public static final String URL_LOGIN_PROC = "http://117.17.93.204:8086/rest/loginProc.do";
+        public static final String URL_LOGIN_PROC = "http://172.16.8.188:8080/rest/loginProc.do";
         // DataBase에 저장되어 있는 table의 항목 이름(자바에서 변수랑 똑같아야 함)
         private String userId, userPw;
 
