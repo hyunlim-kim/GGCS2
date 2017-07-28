@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /* 어플리케이션을 최초로 실행했을 때 한번만 뜨는 도움말 화면 */
+// 지윤
 
 public class WelcomeActivity extends AppCompatActivity {
 
