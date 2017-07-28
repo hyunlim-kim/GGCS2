@@ -11,7 +11,7 @@ public class ExpenseSecond extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_expense_user1);
+        setContentView(R.layout.activity_expense_second);
     } //onCreate 닫힘
 
 
