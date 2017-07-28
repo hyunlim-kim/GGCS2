@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
         public static int oddColor = Color.rgb(225, 225, 225);
         public static int headColor = Color.rgb(12, 32, 158);
-        public static int pink = Color.rgb(255, 216, 216);
+        public static int pink = Color.rgb(255, 255, 210);
 
         private int selectedPosition = -1;
 
