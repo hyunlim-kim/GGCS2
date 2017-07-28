@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -24,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 public class JoinActivity extends AppCompatActivity {
 
     private EditText mEdtId, mEdtPw,mEdtPwCheck;
+    private ProgressBar JoinProgressBar;
 
 
     @Override
@@ -35,6 +37,8 @@ public class JoinActivity extends AppCompatActivity {
         mEdtPw = (EditText)findViewById(R.id.edtPw);
         mEdtPwCheck = (EditText)findViewById(R.id.edtPwCheck);
 
+        JoinProgressBar = (ProgressBar)findViewById(R.id.JoinprogressBar);
+
 
 
         findViewById(R.id.btnJoin).setOnClickListener(new View.OnClickListener() {
@@ -42,10 +46,14 @@ public class JoinActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String Pw1 = mEdtPw.getText().toString();
-                String pw2 = mEdtPwCheck.getText().toString();
+                String Pw2 = mEdtPwCheck.getText().toString();
+                String ID = mEdtId.getText().toString();
 
-                if(Pw1.equals(pw2)){
+                if(Pw1.equals(Pw2) && ID.length() > 3 ){
                         new JoinTask().execute();
+                }
+                else if(ID.length() <= 3){
+                    Toast.makeText(JoinActivity.this,"아이디는 3자 이상이여야 합니다",Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Toast.makeText(JoinActivity.this,"비밀번호가 일치하지 않습니다 \n 다시 확인해주세요", Toast.LENGTH_SHORT).show();
@@ -65,6 +73,8 @@ public class JoinActivity extends AppCompatActivity {
         protected void onPreExecute() {
             userId = mEdtId.getText().toString();
             userPw = mEdtPw.getText().toString();
+
+            JoinProgressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -93,6 +103,9 @@ public class JoinActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
+
+
+            JoinProgressBar.setVisibility(View.INVISIBLE);
 
             Gson gson = new Gson();
 

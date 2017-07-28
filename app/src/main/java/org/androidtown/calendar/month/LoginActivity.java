@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -25,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // 변수 선언
     private EditText mEdtUserId, mEdtUserPw;
-
+    private ProgressBar mProgressBar;
 
 
     @Override
@@ -36,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
         // 변수와 xml에서 component 찾아 연결
         mEdtUserId = (EditText) findViewById(R.id.edtUserId);
         mEdtUserPw = (EditText) findViewById(R.id.edtUserPw);
+
+        mProgressBar = (ProgressBar)findViewById(R.id.LoginprogressBar);
 
         // Button들에 대해 onClickListener 걸어주기
         findViewById(R.id.btnLogin).setOnClickListener(btnClick);
@@ -66,6 +69,8 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
+
+            mProgressBar.setVisibility(View.VISIBLE);
             // 사용자가 아이디와 비밀번호 입력한 내용들을 string으로 불러옴
             userId = mEdtUserId.getText().toString();
             userPw = mEdtUserPw.getText().toString();
@@ -97,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            //
+            mProgressBar.setVisibility(View.INVISIBLE);
             Gson gson = new Gson();
             try {
                 UserBean bean = gson.fromJson(s, UserBean.class);
