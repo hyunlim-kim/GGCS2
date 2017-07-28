@@ -14,13 +14,11 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtDate"
+        <DatePicker
+            android:id="@+id/datePicker"
+            style="@android:style/Widget.DatePicker"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="YYYY/MM/D"
-            android:textSize="20sp" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
@@ -140,29 +138,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:weightSum="2">
 
         <TextView
-            android:id="@+id/txtTotal01"
+            android:id="@+id/txtTotal1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_weight="1"
             android:gravity="center_vertical|center_horizontal"
-            android:text="100,000"
             android:textSize="22sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txtTotal02"
+            android:id="@+id/txtTotal2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_weight="1"
             android:gravity="center_vertical|center_horizontal"
-            android:text="Total"
             android:textSize="22sp"
             android:textStyle="bold" />
     </LinearLayout>
