@@ -9,6 +9,6 @@ public class ExpenseFirst extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_expense_First);
+        setContentView(R.layout.activity_expense_first);
     }
 }
