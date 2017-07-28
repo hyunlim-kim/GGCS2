@@ -2,6 +2,7 @@ package org.androidtown.calendar.month;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -65,14 +66,16 @@ public class MainActivity extends AppCompatActivity {
         monthViewAdapter = new CalendarMonthAdapter(this);
         monthView.setAdapter(monthViewAdapter);
 
+
+
         // 리스너 설정
         monthView.setOnDataSelectionListener(new OnDataSelectionListener() {
             public void onDataSelected(AdapterView parent, View v, int position, long id) {
                 // 현재 선택한 일자 정보 표시
                 MonthItem curItem = (MonthItem) monthViewAdapter.getItem(position);
                 int day = curItem.getDay();
-
                 Log.d("MainActivity", "Selected : " + day);
+
 
             }
         });
@@ -104,9 +107,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * 월 표시 텍스트 설정
-     */
+    // * 월 표시 텍스트 설정
+
     private void setMonthText() {
         curYear = monthViewAdapter.getCurYear();
         curMonth = monthViewAdapter.getCurMonth();

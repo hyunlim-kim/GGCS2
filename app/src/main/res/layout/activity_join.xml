@@ -36,18 +36,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:layout_weight="1.2"
+            android:layout_marginRight="10dp"
+            android:layout_weight="2"
             android:ems="10"
             android:inputType="text" />
 
-        <Button
-            android:id="@+id/btnIdCheck"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:layout_marginRight="10dp"
-            android:layout_weight="0.8"
-            android:text="중복확인" />
     </LinearLayout>
 
     <LinearLayout
