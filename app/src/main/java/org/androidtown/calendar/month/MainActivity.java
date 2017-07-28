@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     final String tapColor1 = "#FFB9CD";
-    final String tapColor2 = "#90D2D1";
+    final String tapColor2 = "#8AC8F1";
     final String backColor = "#D6D6D6";
 
 
@@ -206,8 +206,8 @@ public class MainActivity extends AppCompatActivity {
         Context mContext;
 
         public static int oddColor = Color.rgb(225, 225, 225);
-        public static int headColor = Color.rgb(12, 32, 158);
-        public static int pink = Color.rgb(255, 255, 210);
+        public static int mblue = Color.rgb(138, 200, 241);
+        public static int mpink = Color.rgb(255, 216, 216);
 
         private int selectedPosition = -1;
 
@@ -394,7 +394,7 @@ public class MainActivity extends AppCompatActivity {
 
             // set background color
             if (position == getSelectedPosition()) {
-                itemView.setBackgroundColor(pink);
+                itemView.setBackgroundColor(mpink);
             } else {
                 itemView.setBackgroundColor(Color.WHITE);
             }
