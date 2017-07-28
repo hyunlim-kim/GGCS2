@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     private class LoginProcTask extends AsyncTask<String, Void, String> {
 
         // URL_LOGIN_PROC 설정(자기 IP에 맞게 설정할 것!!!!!!!!!!)
-        public static final String URL_LOGIN_PROC = "http://172.16.8.188:8080/rest/loginProc.do";
+        public static final String URL_LOGIN_PROC = "http://117.17.93.204:8086/rest/loginProc.do";
         // DataBase에 저장되어 있는 table의 항목 이름(자바에서 변수랑 똑같아야 함)
         private String userId, userPw;
 
