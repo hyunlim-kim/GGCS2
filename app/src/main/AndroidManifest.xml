@@ -7,7 +7,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ggcs2_ic_launcher"
-        android:label="니돈 == 내돈"
+        android:label="티끌모아"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
