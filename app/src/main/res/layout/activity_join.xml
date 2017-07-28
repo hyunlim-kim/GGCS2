@@ -38,7 +38,7 @@
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_weight="1.2"
             android:ems="10"
-            android:inputType="textPassword" />
+            android:inputType="text" />
 
         <Button
             android:id="@+id/btnIdCheck"

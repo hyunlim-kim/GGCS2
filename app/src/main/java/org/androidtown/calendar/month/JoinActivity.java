@@ -1,6 +1,6 @@
 package org.androidtown.calendar.month;
 
-import android.content.Intent;
+
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,8 +23,8 @@ import org.springframework.web.client.RestTemplate;
 // 주석
 public class JoinActivity extends AppCompatActivity {
 
-    private EditText mEdtId, mEdtPw;
-    private Button mBtnJoin, mBtnIdCheck;
+    private EditText mEdtId, mEdtPw,mEdtPwCheck;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,20 +33,31 @@ public class JoinActivity extends AppCompatActivity {
 
         mEdtId = (EditText)findViewById(R.id.edtId);
         mEdtPw = (EditText)findViewById(R.id.edtPw);
-        mBtnJoin = (Button)findViewById(R.id.btnJoin);
-        mBtnIdCheck = (Button)findViewById(R.id.btnIdCheck);
+        mEdtPwCheck = (EditText)findViewById(R.id.edtPwCheck);
+
+
 
         findViewById(R.id.btnJoin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new JoinTask().execute();
-            }
+
+                String Pw1 = mEdtPw.getText().toString();
+                String pw2 = mEdtPwCheck.getText().toString();
+
+                if(Pw1.equals(pw2)){
+                        new JoinTask().execute();
+                }
+                else {
+                    Toast.makeText(JoinActivity.this,"비밀번호가 일치하지 않습니다 \n 다시 확인해주세요", Toast.LENGTH_SHORT).show();
+                }
+            }//end onClick
+
         });
     }//end onCreate()
 
     private class JoinTask extends AsyncTask<String, Void, String> {
 
-        public static final String URL_LOGIN_PROC = "http://117.17.93.203:8888/rest/JoinProc.do";
+        public static final String URL_JOIN_PROC = "http://172.16.8.188:8080/rest/insertUser.do";
 
         private String userId, userPw;
 
@@ -64,15 +75,15 @@ public class JoinActivity extends AppCompatActivity {
                 restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
 
                 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-                map.add("Id", userId);
-                map.add("Password", userPw);
+                map.add("userId", userId);
+                map.add("UserPw", userPw);
 
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.ALL.APPLICATION_FORM_URLENCODED);
 
                 HttpEntity<MultiValueMap<String,Object>> request = new HttpEntity<>(map, headers);
 
-                return restTemplate.postForObject(URL_LOGIN_PROC, request, String.class);
+                return restTemplate.postForObject(URL_JOIN_PROC, request, String.class);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -91,8 +102,8 @@ public class JoinActivity extends AppCompatActivity {
                 UserBean bean = gson.fromJson(s, UserBean.class);
                 if (bean != null) {
                     if (bean.getResult().equals("ok")) {
-                        Intent i = new Intent(JoinActivity.this, LoginActivity.class);
-                        startActivity(i);
+                        Toast.makeText(JoinActivity.this,"회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show();
+                        finish();
 
                     } else {
                         Toast.makeText(JoinActivity.this, bean.getResultMsg(), Toast.LENGTH_SHORT).show();
