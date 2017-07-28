@@ -24,7 +24,7 @@ import org.springframework.web.client.RestTemplate;
 public class JoinActivity extends AppCompatActivity {
 
     private EditText mEdtId, mEdtPw;
-    private Button mBtnJoin, mBtnIdCheck;
+    private Button mBtnJoin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,6 @@ public class JoinActivity extends AppCompatActivity {
         mEdtId = (EditText)findViewById(R.id.edtId);
         mEdtPw = (EditText)findViewById(R.id.edtPw);
         mBtnJoin = (Button)findViewById(R.id.btnJoin);
-        mBtnIdCheck = (Button)findViewById(R.id.btnIdCheck);
 
         findViewById(R.id.btnJoin).setOnClickListener(new View.OnClickListener() {
             @Override
