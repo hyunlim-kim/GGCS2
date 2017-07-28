@@ -29,8 +29,6 @@
         </activity>
         <activity android:name=".ExpenseSecond">
         </activity>
-        <activity android:name=".ExpenseFirst">
-        </activity>
         <activity android:name=".WelcomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

@@ -207,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
         public static int oddColor = Color.rgb(225, 225, 225);
         public static int headColor = Color.rgb(12, 32, 158);
+        public static int pink = Color.rgb(255, 255, 210);
 
         private int selectedPosition = -1;
 
@@ -393,7 +394,7 @@ public class MainActivity extends AppCompatActivity {
 
             // set background color
             if (position == getSelectedPosition()) {
-                itemView.setBackgroundColor(Color.YELLOW);
+                itemView.setBackgroundColor(pink);
             } else {
                 itemView.setBackgroundColor(Color.WHITE);
             }
