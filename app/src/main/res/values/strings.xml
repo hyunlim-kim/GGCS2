@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">티끌모아</string>
+
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+    <string name="title_activity_welcome">Home Screen</string>
+
 </resources>
