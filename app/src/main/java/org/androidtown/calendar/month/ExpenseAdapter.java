@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.List;
@@ -21,8 +23,8 @@ public class ExpenseAdapter extends BaseAdapter {
     private Context context;
     private List<ExpenseBean> list;
 
-    private TextView txtPayment01, txtDetail01, txtEtc01;
-    private TextView txtPayment02, txtDetail02, txtEtc02;
+    private EditText edtMoney, edtDetail, edtPlace, edtMemo;
+    private Button btnSave, btnCancel;
 
     public ExpenseAdapter(Context context, List<ExpenseBean>list){
         this.context = context;
@@ -53,20 +55,34 @@ public class ExpenseAdapter extends BaseAdapter {
 
         final ExpenseBean exp = list.get(position); // 리스트에 넣을 ..
 
-        txtPayment01 = (TextView)convertView.findViewById(R.id.txtPayment01);            // 지출액
+
+        edtMoney = (EditText) convertView.findViewById(R.id.edtMoney);            // 지출액
 //        txtPayment02 = (TextView)convertView.findViewById(R.id.txtPayment02);
-        txtDetail01 = (TextView)convertView.findViewById(R.id.txtDetail01);             // 지출내역
+        edtDetail = (EditText) convertView.findViewById(R.id.edtDetail);             // 지출내역
 //        txtDetail02 = (TextView)convertView.findViewById(R.id.txtDetail02);
+        edtPlace = (EditText) convertView.findViewById(R.id.edtPlace);
+        edtMemo = (EditText) convertView.findViewById(R.id.edtMemo);
 
-        txtEtc01 = (TextView)convertView.findViewById(R.id.txtEtc01);              // 카드 or 현금 , 사용처
-//        txtEtc02 = (TextView)convertView.findViewById(R.id.txtEtc02);
+        btnSave = (Button) convertView.findViewById(R.id.btnSave);
+        btnCancel = (Button) convertView.findViewById(R.id.btnCancel);
 
-        txtPayment01.setText(exp.getPayment()); // 지출액에 빈에서 읽어온 지출액을 표시 .,.일단은 하나에 다 표시 ..
-        txtDetail01.setText(exp.getDetail());
-        txtEtc01.setText(exp.getEtc());
+
+        edtMoney.setText(exp.getMoney()); // 지출액에 빈에서 읽어온 지출액을 표시 .,.일단은 하나에 다 표시 ..
+        edtPlace.setText(exp.getDetail());
+        edtDetail.setText(exp.getDetail());
+        edtMemo.setText(exp.getMemo());
+
 
 
 
         return convertView;
     }
 }
+
+
+
+
+
+
+
+
