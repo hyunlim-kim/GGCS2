@@ -53,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
             if (v.getId() == R.id.btnLogin) {
                 new LoginProcTask().execute();
 
+
             } else if (v.getId() == R.id.btnJoin) {
                 Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
                 LoginActivity.this.startActivity(intent);
