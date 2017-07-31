@@ -64,7 +64,7 @@
             android:paddingRight="25dp">
 
             <RadioButton
-                android:id="@+id/men"
+                android:id="@+id/man"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -75,7 +75,7 @@
                 android:textSize="22dp" />
 
             <RadioButton
-                android:id="@+id/Women"
+                android:id="@+id/woman"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -182,7 +182,7 @@
                                
 
                 <EditText
-                    android:id="@+id/editText4"
+                    android:id="@+id/edtMoney"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="7"
@@ -218,7 +218,7 @@
                                
 
                 <EditText
-                    android:id="@+id/editText3"
+                    android:id="@+id/edtDetail"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="7"
@@ -254,7 +254,7 @@
                                
 
                 <EditText
-                    android:id="@+id/editText2"
+                    android:id="@+id/edtPlace"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="7"
@@ -317,7 +317,7 @@
                        
 
             <EditText
-                android:id="@+id/editText5"
+                android:id="@+id/edtMemo"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="7"
@@ -371,7 +371,7 @@
                                
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/btnSave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorAccent"
@@ -399,7 +399,7 @@
                                
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/btnCancel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/darker_gray"
