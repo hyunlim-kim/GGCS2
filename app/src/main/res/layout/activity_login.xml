@@ -142,7 +142,7 @@
             android:layout_marginRight="5dp"
             android:layout_weight="5"
             android:shadowColor="@color/colorAccent"
-            android:background="@drawable/button_pressed"
+            android:background="@drawable/button_pressed2"
             android:text="알뜰한 미래를 위해 회원가입"
             android:textColorLink="@color/colorAccent" />
 

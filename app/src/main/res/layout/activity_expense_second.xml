@@ -374,7 +374,7 @@
                     android:id="@+id/btnSave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
+                    android:background="@drawable/button_pressed"
                     android:text="저장하기"
                     android:textStyle="bold" />
                            
@@ -402,7 +402,7 @@
                     android:id="@+id/btnCancel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/button_pressed2"
                     android:text="취소하기"
                     android:textStyle="bold" />
                            
