@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by 서현 on 2017-07-27.
  */
 
-//주석
+//주석2
 public class ExpenseBean implements Serializable {
 
     private String sex; // 지출액
