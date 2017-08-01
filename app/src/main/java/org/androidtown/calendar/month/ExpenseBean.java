@@ -9,14 +9,14 @@ import java.io.Serializable;
 //주석2
 public class ExpenseBean implements Serializable {
 
-    private String sex; // 지출액
-    private String money; // 사용내역
+    private String sex; // 성별
+    private String money; // 금액
     private String detail; // 카드/상점
-    private String place; //사용처
-    private String memo; //메모
+    private String place; // 사용처
+    private String memo; // 메모
     private String money_id;
-    private String date; //날짜
-    private String user_id; //아이디
+    private String date; // 날짜
+    private String user_id; // 아이디
 
 
     public ExpenseBean(String sex, String detail, String money, String place, String memo, String money_id, String date, String user_id) {
