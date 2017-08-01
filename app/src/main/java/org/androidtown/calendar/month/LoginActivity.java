@@ -24,6 +24,8 @@ import org.springframework.web.client.RestTemplate;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private String userPw;
+    public static String userId;
     // 변수 선언
     private EditText mEdtUserId, mEdtUserPw;
     private ProgressBar mProgressBar;
@@ -66,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         // URL_LOGIN_PROC 설정(자기 IP에 맞게 설정할 것!!!!!!!!!!)
         public static final String URL_LOGIN_PROC = "http://117.17.93.203:8888//rest/loginProc.do";
         // DataBase에 저장되어 있는 table의 항목 이름(자바에서 변수랑 똑같아야 함)
-        private String userId, userPw;
+
 
         @Override
         protected void onPreExecute() {

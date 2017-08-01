@@ -23,8 +23,8 @@ public class ExpenseAdapter extends BaseAdapter {
     private Context context;
     private List<ExpenseBean> list;
 
-    private EditText edtMoney, edtDetail, edtPlace, edtMemo;
-    private Button btnSave, btnCancel;
+    private TextView txtPayment01, txtDetail01, txtEtc01;
+    private TextView txtPayment02, txtDetail02, txtEtc02;
 
     public ExpenseAdapter(Context context, List<ExpenseBean>list){
         this.context = context;
