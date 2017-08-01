@@ -44,11 +44,7 @@ public class ExpenseSecond extends AppCompatActivity {
     private DatePicker mDatePicker;
     private String Sex;
 
-    // 변수 선언
-    private DatePicker mDatePicker;
-    private RadioButton mWoman, mMan;
-    private EditText mEdtMoney, mEdtDetail, mEdtPlace, mEdtMemo;
-    private Button mBtnSave, mBtnCancel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

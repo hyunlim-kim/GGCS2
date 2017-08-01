@@ -65,7 +65,7 @@ public class JoinActivity extends AppCompatActivity {
 
     private class JoinTask extends AsyncTask<String, Void, String> {
 
-        public static final String URL_JOIN_PROC = "http://117.17.93.203:8888/rest/insertUser.do";
+        public static final String URL_JOIN_PROC = "http://172.16.8.188:8080/rest/insertUser.do";
 
         private String userId, userPw;
 

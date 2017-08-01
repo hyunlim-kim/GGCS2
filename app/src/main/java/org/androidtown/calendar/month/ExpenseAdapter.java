@@ -23,9 +23,6 @@ public class ExpenseAdapter extends BaseAdapter {
     private Context context;
     private List<ExpenseBean> list;
 
-    private TextView txtPayment01, txtDetail01, txtEtc01;
-    private TextView txtPayment02, txtDetail02, txtEtc02;
-
     public ExpenseAdapter(Context context, List<ExpenseBean>list){
         this.context = context;
         this.list = list;
@@ -55,7 +52,7 @@ public class ExpenseAdapter extends BaseAdapter {
 
         final ExpenseBean exp = list.get(position); // 리스트에 넣을 ..
 
-
+/*
         edtMoney = (EditText) convertView.findViewById(R.id.edtMoney);            // 지출액
 //        txtPayment02 = (TextView)convertView.findViewById(R.id.txtPayment02);
         edtDetail = (EditText) convertView.findViewById(R.id.edtDetail);             // 지출내역
@@ -71,7 +68,7 @@ public class ExpenseAdapter extends BaseAdapter {
         edtPlace.setText(exp.getDetail());
         edtDetail.setText(exp.getDetail());
         edtMemo.setText(exp.getMemo());
-
+*/
 
         return convertView;
     }
