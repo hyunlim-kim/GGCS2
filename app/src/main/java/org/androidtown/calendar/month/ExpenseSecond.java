@@ -83,7 +83,7 @@ public class ExpenseSecond extends AppCompatActivity {
                     }
                 };
                 AlertDialog.Builder builder = new AlertDialog.Builder(ExpenseSecond.this);
-                dialog[0] = builder.setMessage("정말 최소하시겠습니까? \n 내용은 자동저장되지 않습니다")
+                dialog[0] = builder.setMessage("정말 최소하시겠습니까? \n내용은 자동저장되지 않습니다")
                         .setPositiveButton("확인",OKListener)
                         .setNegativeButton("취소",null)
                         .create();
