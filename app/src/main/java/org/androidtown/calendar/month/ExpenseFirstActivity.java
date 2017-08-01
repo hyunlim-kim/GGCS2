@@ -38,8 +38,8 @@ public class ExpenseFirstActivity extends AppCompatActivity {
 //        btnDelete02 = (Button)findViewById(R.id.btnDelete02);
 
 //         public ExpenseBean (String payment,String detail, String etc)
-        ExpenseBean exp1 = new ExpenseBean("지출액","사용내역","사용처");
-        ExpenseBean exp2 = new ExpenseBean("지출액","사용내역","사용처");
+        ExpenseBean exp1 = new ExpenseBean("성별", "사용내역", "금액", "사용처", "메모", "money_id", "날짜", "사용자 아이디");
+        ExpenseBean exp2 = new ExpenseBean("성별", "사용내역", "금액", "사용처", "메모", "money_id", "날짜", "사용자 아이디");
 
 
         List<ExpenseBean> list = new ArrayList<ExpenseBean>();  // 리스트에 위에 입력한거 넣음 임시.. 테스트

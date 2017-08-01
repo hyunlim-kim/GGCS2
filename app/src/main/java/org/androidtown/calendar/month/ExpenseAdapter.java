@@ -73,8 +73,6 @@ public class ExpenseAdapter extends BaseAdapter {
         edtMemo.setText(exp.getMemo());
 
 
-
-
         return convertView;
     }
 }
