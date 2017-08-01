@@ -1,15 +1,20 @@
 package org.androidtown.calendar.month;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -27,6 +32,10 @@ public class LoginActivity extends AppCompatActivity {
     // 변수 선언
     private EditText mEdtUserId, mEdtUserPw;
     private ProgressBar mProgressBar;
+    private CheckBox mCheckBox;
+
+    SharedPreferences setting;
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -37,14 +46,51 @@ public class LoginActivity extends AppCompatActivity {
         // 변수와 xml에서 component 찾아 연결
         mEdtUserId = (EditText) findViewById(R.id.edtUserId);
         mEdtUserPw = (EditText) findViewById(R.id.edtUserPw);
-
-        mProgressBar = (ProgressBar)findViewById(R.id.LoginprogressBar);
+        mCheckBox = (CheckBox) findViewById(R.id.checkBox);
+        mProgressBar = (ProgressBar) findViewById(R.id.LoginprogressBar);
 
         // Button들에 대해 onClickListener 걸어주기
         findViewById(R.id.btnLogin).setOnClickListener(btnClick);
         findViewById(R.id.btnJoin).setOnClickListener(btnClick);
 
-    } // onCreate
+        setting = getSharedPreferences("setting", 0);
+        editor = setting.edit();
+
+        //앱 껏다켜도 자동로그인 유지
+        if (setting.getBoolean("Auto_Login_enabled", false)) {
+            mEdtUserId.setText(setting.getString("ID", ""));
+            mEdtUserPw.setText(setting.getString("PW", ""));
+            mCheckBox.setChecked(true);
+        }
+
+        //CheckBox를 선택할 때마다 호출할 리스너
+        mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked) {
+                    String ID = mEdtUserId.getText().toString();
+                    String PW = mEdtUserPw.getText().toString();
+
+                    editor.putString("ID", ID);
+                    editor.putString("PW", PW);
+                    editor.putBoolean("Auto_Login_enabled", true);
+                    editor.commit();
+                } else {
+
+                    editor.clear();
+                    editor.commit();
+                }
+            } //onCheckedChanged 닫힘
+        });  //setOnCheckedChangeListener 닫힘
+    }  //onCreate 닫힘
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+        return true;
+    }
+
 
     // OnClickListener Event 설정
     private View.OnClickListener btnClick = new View.OnClickListener() {
@@ -61,10 +107,11 @@ public class LoginActivity extends AppCompatActivity {
         } // onClick
     }; // onClickListener
 
+
     private class LoginProcTask extends AsyncTask<String, Void, String> {
 
         // URL_LOGIN_PROC 설정(자기 IP에 맞게 설정할 것!!!!!!!!!!)
-        public static final String URL_LOGIN_PROC = "http://117.17.93.203:8888//rest/loginProc.do";
+        public static final String URL_LOGIN_PROC = "http://172.16.9.54:8080/rest/loginProc.do";
         // DataBase에 저장되어 있는 table의 항목 이름(자바에서 변수랑 똑같아야 함)
         private String userId, userPw;
 
