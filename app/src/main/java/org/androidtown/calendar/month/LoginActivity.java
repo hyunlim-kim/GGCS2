@@ -2,6 +2,7 @@ package org.androidtown.calendar.month;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInstaller;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.provider.SyncStateContract;
@@ -33,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEdtUserId, mEdtUserPw;
     private ProgressBar mProgressBar;
     private CheckBox mCheckBox;
+    public static String userId;
 
     SharedPreferences setting;
     SharedPreferences.Editor editor;
@@ -76,11 +78,14 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("PW", PW);
                     editor.putBoolean("Auto_Login_enabled", true);
                     editor.commit();
-                } else {
+                }
+                else {
 
                     editor.clear();
                     editor.commit();
                 }
+
+
             } //onCheckedChanged 닫힘
         });  //setOnCheckedChangeListener 닫힘
     }  //onCreate 닫힘
@@ -113,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
         // URL_LOGIN_PROC 설정(자기 IP에 맞게 설정할 것!!!!!!!!!!)
         public static final String URL_LOGIN_PROC = "http://172.16.9.54:8080/rest/loginProc.do";
         // DataBase에 저장되어 있는 table의 항목 이름(자바에서 변수랑 똑같아야 함)
-        private String userId, userPw;
+        private String userPw;
 
         @Override
         protected void onPreExecute() {
