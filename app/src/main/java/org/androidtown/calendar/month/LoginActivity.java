@@ -30,6 +30,8 @@ import org.springframework.web.client.RestTemplate;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private String userPw;
+    public static String PuserId;
     // 변수 선언
     private EditText mEdtUserId, mEdtUserPw;
     private ProgressBar mProgressBar;
@@ -116,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
     private class LoginProcTask extends AsyncTask<String, Void, String> {
 
         // URL_LOGIN_PROC 설정(자기 IP에 맞게 설정할 것!!!!!!!!!!)
-        public static final String URL_LOGIN_PROC = "http://172.16.9.54:8080/rest/loginProc.do";
+        public static final String URL_LOGIN_PROC = "http://172.16.8.188:8080/rest/loginProc.do";
         // DataBase에 저장되어 있는 table의 항목 이름(자바에서 변수랑 똑같아야 함)
         private String userPw;
 
@@ -125,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
 
             mProgressBar.setVisibility(View.VISIBLE);
             // 사용자가 아이디와 비밀번호 입력한 내용들을 string으로 불러옴
-            userId = mEdtUserId.getText().toString();
+            PuserId = mEdtUserId.getText().toString();
             userPw = mEdtUserPw.getText().toString();
         } // onPreExecute()
 
@@ -137,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
                 restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
 
                 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-                map.add("userId", userId);
+                map.add("userId", PuserId);
                 map.add("userPw", userPw);
 
                 HttpHeaders headers = new HttpHeaders();

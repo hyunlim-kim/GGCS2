@@ -76,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
                 // 현재 선택한 일자 정보 표시
                 MonthItem curItem = (MonthItem) monthViewAdapter.getItem(position);
                 int day = curItem.getDay();
-                Log.d("MainActivity", "Selected : " + day);
+                Intent dataIntent = new Intent(MainActivity.this, ExpenseFirstActivity.class);
+                startActivity(dataIntent);
+
 
 
             }

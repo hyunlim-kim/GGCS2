@@ -16,21 +16,14 @@ import android.widget.GridView;
  */
 public class CalendarMonthView extends GridView {
 
-	/**
-	 * 일자 선택을 위해 직접 정의한 리스너 객체 
-	 */
+	/*일자 선택을 위해 직접 정의한 리스너 객체  */
 	private OnDataSelectionListener selectionListener;
 	
-	/**
-	 * 어댑터 객체
-	 */
+	/*어댑터 객체*/
 	MainActivity.CalendarMonthAdapter adapter;
 	
-	/**
-	 * 생성자
-	 * 
-	 * @param context
-	 */
+	/*생성자
+	 * @param context*/
 	public CalendarMonthView(Context context) {
 		super(context);
 

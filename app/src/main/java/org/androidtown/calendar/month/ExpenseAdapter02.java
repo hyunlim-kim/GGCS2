@@ -18,24 +18,25 @@ import java.util.List;
  * Created by 서현 on 2017-07-27.
  */
 
-public class ExpenseAdapter extends BaseAdapter {
+public class ExpenseAdapter02 extends BaseAdapter {
 
     private Context context;
-    private List<ExpenseBean> list;
+    private ExpenseBean expenseBean;
 
-    public ExpenseAdapter(Context context, List<ExpenseBean>list){
+
+    public ExpenseAdapter02(Context context, ExpenseBean expenseBean){
         this.context = context;
-        this.list = list;
+        this.expenseBean = expenseBean;
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return expenseBean.getExpenseBoyList().size();
     }
 
     @Override
     public Object getItem(int position) {
-        return position;
+        return expenseBean.getExpenseBoyList().get(position);
     }
 
     @Override
@@ -47,32 +48,23 @@ public class ExpenseAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater li = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         convertView = li.inflate(R.layout.lay_expense_first, null); // 여기다가 리스트 뷰를 뿌림
 
-        final ExpenseBean exp = list.get(position); // 리스트에 넣을 ..
+        final ExpenseBean.ExpenseSubBean BoyList = expenseBean.getExpenseBoyList().get(position);
 
-/*
-        edtMoney = (EditText) convertView.findViewById(R.id.edtMoney);            // 지출액
-//        txtPayment02 = (TextView)convertView.findViewById(R.id.txtPayment02);
-        edtDetail = (EditText) convertView.findViewById(R.id.edtDetail);             // 지출내역
-//        txtDetail02 = (TextView)convertView.findViewById(R.id.txtDetail02);
-        edtPlace = (EditText) convertView.findViewById(R.id.edtPlace);
-        edtMemo = (EditText) convertView.findViewById(R.id.edtMemo);
+        TextView txtPayment02 = (TextView)convertView.findViewById(R.id.txtPayment01);
+        TextView txtDetail02 = (TextView)convertView.findViewById(R.id.txtDetail01);
+        TextView txtEtc02 = (TextView)convertView.findViewById(R.id.txtEtc01);
 
-        btnSave = (Button) convertView.findViewById(R.id.btnSave);
-        btnCancel = (Button) convertView.findViewById(R.id.btnCancel);
-
-
-        edtMoney.setText(exp.getMoney()); // 지출액에 빈에서 읽어온 지출액을 표시 .,.일단은 하나에 다 표시 ..
-        edtPlace.setText(exp.getDetail());
-        edtDetail.setText(exp.getDetail());
-        edtMemo.setText(exp.getMemo());
-*/
+        txtDetail02.setText(BoyList.getDetail());
+        txtEtc02.setText(BoyList.getPlace());
+        String Price = String.format("%,d",new Integer(BoyList.getMoney()));
+        txtPayment02.setText(Price);
 
         return convertView;
     }
 }
+
 
 
 

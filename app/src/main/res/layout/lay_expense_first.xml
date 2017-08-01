@@ -65,7 +65,7 @@
             android:scaleType="centerInside" />
 
         <Button
-            android:id="@+id/btnDelete01"
+            android:id="@+id/btnDelete"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical|center_horizontal"

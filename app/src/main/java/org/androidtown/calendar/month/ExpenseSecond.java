@@ -141,7 +141,7 @@ public class ExpenseSecond extends AppCompatActivity {
                 restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
 
                 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-                map.add("userId", LoginActivity.userId);
+                map.add("userId", LoginActivity.PuserId);
                 map.add("Money", Money);
                 map.add("Detail", Detail);
                 map.add("Place", Place);
