@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     TextView monthText;                     //월을 표시하는 텍스트뷰
     int curYear;                            //현재 연도
     int curMonth;                           // 현재 월
+    String today;
 
 
     /* 뒤로가기 두 번 누르면 종료하는 기능 */
@@ -76,7 +77,10 @@ public class MainActivity extends AppCompatActivity {
                 // 현재 선택한 일자 정보 표시
                 MonthItem curItem = (MonthItem) monthViewAdapter.getItem(position);
                 int day = curItem.getDay();
+                today = curYear+"." + (curMonth+1) +"." + day;
+
                 Intent dataIntent = new Intent(MainActivity.this, ExpenseFirstActivity.class);
+                dataIntent.putExtra("today",today);
                 startActivity(dataIntent);
 
 

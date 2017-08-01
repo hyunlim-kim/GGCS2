@@ -48,6 +48,8 @@ public class ExpenseFirstActivity extends AppCompatActivity {
         txtTotal01 = (TextView) findViewById(R.id.txtTotal01);              // 총합
         txtTotal02 = (TextView) findViewById(R.id.txtTotal02);
 
+        String today = getIntent().getStringExtra("today");
+        txtDate.setText(today);
 
         //Girl 내역 추가하기
         findViewById(R.id.btnAdd01).setOnClickListener(new View.OnClickListener() {
@@ -68,7 +70,7 @@ public class ExpenseFirstActivity extends AppCompatActivity {
         });//end btnOK
 
 
-        new ExpenseTask01().execute("http://172.16.8.188:8080/rest/selectExpenseList.do?userId=" + LoginActivity.PuserId);
+        new ExpenseTask01().execute("http://172.16.8.188:8080/rest/selectExpenseList.do?userId=" + LoginActivity.PuserId +"&date="+today);
 
 
     }
@@ -125,9 +127,12 @@ public class ExpenseFirstActivity extends AppCompatActivity {
                 if(Bean !=null){ //들어온 정보가 비어있거나 길이가 0 이 아닌 즉,제대로 들어오는 경우
                     //1.Adapter생성
                     ExpenseAdapter01 adapter01 = new ExpenseAdapter01(ExpenseFirstActivity.this,Bean);
-                    listView01.setAdapter(adapter01);
+                    adapter01.setTotDispTextView( txtTotal01 );
+                    listView01.setAdapter(adapter01); //여자
+
                     ExpenseAdapter02 adapter02 = new ExpenseAdapter02(ExpenseFirstActivity.this,Bean);
-                    listView02.setAdapter(adapter02);
+                    adapter02.setTotDispTextView( txtTotal02 );
+                    listView02.setAdapter(adapter02); //남자
 
 
                 }//end if

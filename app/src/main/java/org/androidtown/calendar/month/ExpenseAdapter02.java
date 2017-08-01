@@ -5,17 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.List;
 
 /**
- * Adapter가 하는 역할은 사용자 데이터를 입력받아 View를 생성하는 것이며 Adapter에서 생성되는 View는 ListView 내 하나의 아이템 영역에 표시되는 것
- * User01List 에 뿌려줘야 함.
- *
- * Created by 서현 on 2017-07-27.
+ * Created by qnqnqn1239 on 2017. 8. 1..
  */
 
 public class ExpenseAdapter02 extends BaseAdapter {
@@ -58,11 +53,27 @@ public class ExpenseAdapter02 extends BaseAdapter {
 
         txtDetail02.setText(BoyList.getDetail());
         txtEtc02.setText(BoyList.getPlace());
-        String Price = String.format("%,d",new Integer(BoyList.getMoney()));
+        int money = new Integer(BoyList.getMoney());
+        String Price = String.format("%,d", money);
         txtPayment02.setText(Price);
 
         return convertView;
     }
+
+
+    public void setTotDispTextView(TextView txtView) {
+        List<ExpenseBean.ExpenseSubBean> boyList = expenseBean.getExpenseBoyList();
+        int totMoney = 0;
+        for(int i=0; i<boyList.size(); i++) {
+            totMoney += Integer.parseInt( boyList.get(i).getMoney() );
+        }
+
+
+        String TotalMoney = String.format("%,d",totMoney);
+
+        txtView.setText( TotalMoney + " 원" );
+    }
+
 }
 
 
