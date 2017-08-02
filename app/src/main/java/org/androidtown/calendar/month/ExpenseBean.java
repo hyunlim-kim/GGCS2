@@ -24,9 +24,13 @@ public class ExpenseBean{
         private String money_Id;
         private String date;
         private String userId;
+        private String day;
+        private String sumMoney;
+
+
 
         //생성자
-        public ExpenseSubBean(String sex, String detail, String money, String place, String memo, String money_Id, String date, String user_Id) {
+        public ExpenseSubBean(String sumMoney , String sex, String detail, String money, String place, String memo, String money_Id, String date, String user_Id, String day) {
             this.sex = sex;
             this.money = money;
             this.detail = detail;
@@ -35,6 +39,26 @@ public class ExpenseBean{
             this.money_Id = money_Id;
             this.date = date;
             this.userId = userId;
+            this.day = day;
+            this.sumMoney = sumMoney;
+
+        }
+
+        public String getSumMoney() {
+            return sumMoney;
+        }
+
+        public void setSumMoney(String sumMoney) {
+            this.sumMoney = sumMoney;
+        }
+
+
+        public String getDay() {
+            return day;
+        }
+
+        public void setDay(String day) {
+            this.day = day;
         }
 
         public String getSex() {

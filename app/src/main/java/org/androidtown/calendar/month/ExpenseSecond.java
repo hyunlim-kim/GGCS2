@@ -36,6 +36,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+/*사용내역등록*/
 public class ExpenseSecond extends AppCompatActivity {
 
 
@@ -92,8 +93,6 @@ public class ExpenseSecond extends AppCompatActivity {
         });//end OnClickListener
 
         //'저장하기' 버튼을 눌렀을 때
-
-
         findViewById(R.id.btnOK).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,12 +109,10 @@ public class ExpenseSecond extends AppCompatActivity {
             }
         });//end btnOK
 
-
-
-
     } //end onCreate
 
 
+    //사용내역 추가 Task
     private class expenseInsertTask extends AsyncTask<String, Void, String> {
 
         public static final String URL_INSERTEXPENSE = "http://172.16.8.188:8080/rest/insertExpense.do";
@@ -131,7 +128,7 @@ public class ExpenseSecond extends AppCompatActivity {
             Memo = mEdtMemo.getText().toString();
             Date = String.format("%d.%d.%d",mDatePicker.getYear(),mDatePicker.getMonth() +1 , mDatePicker.getDayOfMonth());
             mprogressBar.setVisibility(View.VISIBLE);
-        }
+        }//end onPreExecute
 
         @Override
         protected String doInBackground(String... params) {
@@ -161,7 +158,7 @@ public class ExpenseSecond extends AppCompatActivity {
             }
 
             return null;
-        }
+        }//end doInBackground
 
         @Override
         protected void onPostExecute(String s) {
@@ -188,9 +185,6 @@ public class ExpenseSecond extends AppCompatActivity {
             } catch (Exception e) {
                 Toast.makeText(ExpenseSecond.this, "파싱 실패", Toast.LENGTH_SHORT).show();
             }
-        }
-    }
-
-
-
+        }//end onPostExecute
+    }//end expenseInsertTask
 } //ExpenseSecond class 닫힘

@@ -30,6 +30,9 @@ import java.util.List;
 
 import static org.androidtown.calendar.month.LoginActivity.PuserId;
 
+
+/*사용내역 상세조회 */
+
 public class ExpenseFirstActivity extends AppCompatActivity {
 
     private TextView txtDate, txtTotal01, txtTotal02;
@@ -44,11 +47,11 @@ public class ExpenseFirstActivity extends AppCompatActivity {
         listView01 = (ListView) findViewById(R.id.listView01); //Girl의 ListView
         listView02 = (ListView) findViewById(R.id.listView02); //Boy의 ListView
 
-        txtDate = (TextView) findViewById(R.id.txtDate); // 달력에서 받은 날짜 텍스트 뷰에 뿌림
-        txtTotal01 = (TextView) findViewById(R.id.txtTotal01);              // 총합
-        txtTotal02 = (TextView) findViewById(R.id.txtTotal02);
+        txtDate = (TextView) findViewById(R.id.txtDate);
+        txtTotal01 = (TextView) findViewById(R.id.txtTotal01);  //Girl의 total
+        txtTotal02 = (TextView) findViewById(R.id.txtTotal02);  //Boy의 total
 
-        String today = getIntent().getStringExtra("today");
+        String today = getIntent().getStringExtra("today"); //선택된 날짜
         txtDate.setText(today);
 
         //Girl 내역 추가하기
@@ -58,7 +61,7 @@ public class ExpenseFirstActivity extends AppCompatActivity {
                 Intent i = new Intent(ExpenseFirstActivity.this, ExpenseSecond.class);
                 startActivity(i);
             }
-        });//end btnOK
+        });
 
         //Boy 내역 추가하기
         findViewById(R.id.btnAdd02).setOnClickListener(new View.OnClickListener() {
@@ -67,81 +70,80 @@ public class ExpenseFirstActivity extends AppCompatActivity {
                 Intent i = new Intent(ExpenseFirstActivity.this, ExpenseSecond.class);
                 startActivity(i);
             }
-        });//end btnOK
+        });
+
+        //상세내역을 받아오는 URL
+        new ExpenseTask().execute("http://172.16.8.188:8080/rest/selectExpenseList.do?userId=" + LoginActivity.PuserId + "&date=" + today);
 
 
-        new ExpenseTask01().execute("http://172.16.8.188:8080/rest/selectExpenseList.do?userId=" + LoginActivity.PuserId +"&date="+today);
+    }//end onCreate
 
 
-    }
+    //상세내역 조회하는 Task
+    class ExpenseTask extends AsyncTask<String,String,ExpenseBean> {
 
-        class ExpenseTask01 extends AsyncTask<String,String,ExpenseBean> {
+        private ProgressDialog prd;
 
-            private ProgressDialog prd;
+        @Override
+        protected void onPreExecute(){
+            prd = new ProgressDialog(ExpenseFirstActivity.this);
+            prd.setMessage("사용내역을 가져오는 중입니다");
+            prd.setCancelable(false);
+            prd.show();
+        }//end onPreExecute
 
-            @Override
-            protected void onPreExecute(){
-                prd = new ProgressDialog(ExpenseFirstActivity.this);
-                prd.setMessage("사용내역을 가져오는 중입니다");
-                prd.setCancelable(false);
-                prd.show();
+        @Override
+        protected ExpenseBean doInBackground(String... params) {
 
+            StringBuilder output = new StringBuilder(); //StringBuilder는 String 값을 버퍼에 저장하여 한꺼번에 가져와주는 !!
 
+            try {
+                URL url = new URL(params[0]);
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+                String line = null;
+
+                //정상적으로 들어온 데이터를 읽어낸다
+                while (true){
+                    line = reader.readLine();
+                    if(line == null) break;
+                    output.append(line+"\n");
+                }//end while
+                reader.close();
+
+                String ExpenseData = output.toString();
+
+                //파싱을 시작한다
+                Gson gson = new GsonBuilder().create();
+                ExpenseBean Bean = gson.fromJson(ExpenseData, ExpenseBean.class);
+
+                return Bean;
+
+            }catch (Exception e){
+                e.printStackTrace();
             }
-            @Override
-            protected ExpenseBean doInBackground(String... params) {
+            return null;
+        } //end doInBackground
 
-                StringBuilder output = new StringBuilder(); //StringBuilder는 String 값을 버퍼에 저장하여 한꺼번에 가져와주는 !!
-                //StringBuffer는 StringBuilder랑 비슷하지만 좀 더 스레드적인 아이
-                try {
-                    URL url = new URL(params[0]);
+        @Override
+        protected void onPostExecute(ExpenseBean Bean) {
+            prd.dismiss();
+            if(Bean !=null){ //들어온 정보가 비어있거나 길이가 0 이 아닌 즉,제대로 들어오는 경우
 
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-                    String line = null;
+                //Girl의 리스트뷰 어뎁터 지정
+                ExpenseAdapter01 adapter01 = new ExpenseAdapter01(ExpenseFirstActivity.this,Bean);
+                adapter01.setTotDispTextView( txtTotal01 );
+                listView01.setAdapter(adapter01);
 
-                    //정상적으로 들어온 데이터를 읽어낸다
-                    while (true){
-                        line = reader.readLine();
-                        if(line == null) break;
-                        output.append(line+"\n");
-                    }//end while
-                    reader.close();
+                //Boy의 리스트뷰 어뎁터 지정
+                ExpenseAdapter02 adapter02 = new ExpenseAdapter02(ExpenseFirstActivity.this,Bean);
+                adapter02.setTotDispTextView( txtTotal02 );
+                listView02.setAdapter(adapter02);
 
-                    String ExpenseData = output.toString();
-
-                    //파싱을 시작한다
-                    Gson gson = new GsonBuilder().create();
-                    ExpenseBean Bean = gson.fromJson(ExpenseData, ExpenseBean.class);
-
-                    return Bean;
-
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                return null;
-            } //end doInBackground
-
-            @Override
-            protected void onPostExecute(ExpenseBean Bean) {
-                prd.dismiss();
-                if(Bean !=null){ //들어온 정보가 비어있거나 길이가 0 이 아닌 즉,제대로 들어오는 경우
-                    //1.Adapter생성
-                    ExpenseAdapter01 adapter01 = new ExpenseAdapter01(ExpenseFirstActivity.this,Bean);
-                    adapter01.setTotDispTextView( txtTotal01 );
-                    listView01.setAdapter(adapter01); //여자
-
-                    ExpenseAdapter02 adapter02 = new ExpenseAdapter02(ExpenseFirstActivity.this,Bean);
-                    adapter02.setTotDispTextView( txtTotal02 );
-                    listView02.setAdapter(adapter02); //남자
+            }//end if
+        }//end onPostExecute
 
 
-                }//end if
-            }//end onPostExecute
-        };//end NewsTask
+    };//end ExpenseTask
 
-
-
-
-
-
-}
+}//end class

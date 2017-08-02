@@ -9,10 +9,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by qnqnqn1239 on 2017. 8. 1..
- */
 
+/*Boy의 listView adapter*/
 public class ExpenseAdapter02 extends BaseAdapter {
 
     private Context context;
@@ -61,6 +59,7 @@ public class ExpenseAdapter02 extends BaseAdapter {
     }
 
 
+    //총액계산
     public void setTotDispTextView(TextView txtView) {
         List<ExpenseBean.ExpenseSubBean> boyList = expenseBean.getExpenseBoyList();
         int totMoney = 0;

@@ -1,9 +1,11 @@
 package org.androidtown.calendar.month;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,7 +25,16 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * 그리드뷰를 이용해 월별 캘린더를 만드는 방법에 대해 알 수 있습니다.
@@ -37,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
     int curYear;                            //현재 연도
     int curMonth;                           // 현재 월
     String today;
+    static int MONTH;
+    static int YEAR;
+
+    static List<ExpenseBean.ExpenseSubBean> GirlMonthlList;
+    static List<ExpenseBean.ExpenseSubBean> BoyMonthList;
 
 
     /* 뒤로가기 두 번 누르면 종료하는 기능 */
@@ -52,11 +69,8 @@ public class MainActivity extends AppCompatActivity {
         }
         Toast.makeText(this, "한 번 더 누르시면 앱이 종료됩니다", Toast.LENGTH_LONG).show();
         pressTime = System.currentTimeMillis();
-    }
+    }//end onBackPressed
 
-    final String tapColor1 = "#FFB9CD";
-    final String tapColor2 = "#8AC8F1";
-    final String backColor = "#D6D6D6";
 
 
     @Override
@@ -70,8 +84,7 @@ public class MainActivity extends AppCompatActivity {
         monthView.setAdapter(monthViewAdapter);
 
 
-
-        // 리스너 설정
+        /*해당날짜 클릭시 상세 페이지로 넘어가기 위한 리스너 정의*/
         monthView.setOnDataSelectionListener(new OnDataSelectionListener() {
             public void onDataSelected(AdapterView parent, View v, int position, long id) {
                 // 현재 선택한 일자 정보 표시
@@ -83,10 +96,9 @@ public class MainActivity extends AppCompatActivity {
                 dataIntent.putExtra("today",today);
                 startActivity(dataIntent);
 
-
-
             }
-        });
+        });//end monthView.setOnDataSelectionListener
+
 
         monthText = (TextView) findViewById(R.id.monthText);
         setMonthText();
@@ -113,16 +125,96 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        super.onResume();
+        new ExpenseMonthTask().execute("http://172.16.8.188:8080/rest/selectExpenseMonthList.do?userId="
+                + LoginActivity.PuserId + "&date=" + curYear +"."+ (curMonth+1));
+
+        MONTH = curMonth;
+        YEAR = curYear;
+
+    }//end onCreate
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new ExpenseMonthTask().execute("http://172.16.8.188:8080/rest/selectExpenseMonthList.do?userId="
+                + LoginActivity.PuserId + "&date=" + curYear +"."+ (curMonth+1));
+
+        MONTH = curMonth;
+        YEAR = curYear;
+
     }
 
-    // * 월 표시 텍스트 설정
+    class ExpenseMonthTask extends AsyncTask<String,String,ExpenseBean> {
 
-    private void setMonthText() {
+        private ProgressDialog prd;
+
+        @Override
+        protected void onPreExecute(){
+            prd = new ProgressDialog(MainActivity.this);
+            prd.setMessage("달력을 로딩중입니다...");
+            prd.setCancelable(false);
+            prd.show();
+        }//end onPreExecute
+
+        @Override
+        protected ExpenseBean doInBackground(String... params) {
+
+            StringBuilder output = new StringBuilder(); //StringBuilder는 String 값을 버퍼에 저장하여 한꺼번에 가져와주는 !!
+
+            try {
+                URL url = new URL(params[0]);
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+                String line = null;
+
+                //정상적으로 들어온 데이터를 읽어낸다
+                while (true){
+                    line = reader.readLine();
+                    if(line == null) break;
+                    output.append(line+"\n");
+                }//end while
+                reader.close();
+
+                String ExpenseData = output.toString();
+
+                //파싱을 시작한다
+                Gson gson = new GsonBuilder().create();
+                ExpenseBean Bean = gson.fromJson(ExpenseData, ExpenseBean.class);
+
+                return Bean;
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        } //end doInBackground
+
+        @Override
+        protected void onPostExecute(ExpenseBean Bean) {
+            prd.dismiss();
+            if(Bean !=null){ //들어온 정보가 비어있거나 길이가 0 이 아닌 즉,제대로 들어오는 경우
+                GirlMonthlList = Bean.getExpenseGirlList();
+                BoyMonthList = Bean.getExpenseBoyList();
+
+                monthViewAdapter.notifyDataSetChanged();//getView를 다시 호출하는 명령어
+
+            }//end if
+
+
+
+        }//end onPostExecute
+
+
+    };//end ExpenseMonthTask
+//----------------------------------------------------------------------------------------------------
+
+    private void setMonthText() {// * 월 표시 텍스트 설정
         curYear = monthViewAdapter.getCurYear();
         curMonth = monthViewAdapter.getCurMonth();
 
         monthText.setText(curYear + "년 " + (curMonth + 1) + "월");
-    }
+    }//end setMonthText
 
     /**
      * 일자 정보를 담기 위한 클래스 정의
@@ -134,12 +226,15 @@ public class MainActivity extends AppCompatActivity {
 
         private int dayValue;
 
+
         public MonthItem() {
 
         }
 
+
         public MonthItem(int day) {
             dayValue = day;
+
         }
 
         public int getDay() {
@@ -175,6 +270,7 @@ public class MainActivity extends AppCompatActivity {
             init();
         }
 
+        //그리드 뷰 하나의 색깔을 정의
         private void init() {
             setBackgroundColor(Color.WHITE);
         }
@@ -184,20 +280,28 @@ public class MainActivity extends AppCompatActivity {
             return item;
         }
 
+        //*************그리드뷰 하나의 텍스트를 정의하는************************************************************
         public void setItem(MonthItem item) {
             this.item = item;
 
             int day = item.getDay();
-            if (day != 0) {
+            if(day != 0){
                 setText(String.valueOf(day));
-            } else {
+            }
+            else{
                 setText("");
             }
 
-        }
+        }//end setItem
+
+        public void addText(String addText) {
+
+            setText( getText() + "\n" + addText );
+
+        }//end setItem
 
 
-    }
+    }//end MonthItemView
 
     /**
      * 어댑터 객체 정의
@@ -248,6 +352,7 @@ public class MainActivity extends AppCompatActivity {
             init();
         }
 
+
         private void init() {
             items = new MonthItem[7 * 6];
 
@@ -257,6 +362,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        //달을 다시 계산하는 함수
         public void recalculate() {
 
             // set to the first day of the month
@@ -265,21 +371,18 @@ public class MainActivity extends AppCompatActivity {
             // get week day
             int dayOfWeek = mCalendar.get(Calendar.DAY_OF_WEEK);
             firstDay = getFirstDay(dayOfWeek);
-            Log.d(TAG, "firstDay : " + firstDay);
 
             mStartDay = mCalendar.getFirstDayOfWeek();
             curYear = mCalendar.get(Calendar.YEAR);
             curMonth = mCalendar.get(Calendar.MONTH);
             lastDay = getMonthLastDay(curYear, curMonth);
 
-            Log.d(TAG, "curYear : " + curYear + ", curMonth : " + curMonth + ", lastDay : " + lastDay);
-
             int diff = mStartDay - Calendar.SUNDAY - 1;
             startDay = getFirstDayOfWeek();
-            Log.d(TAG, "mStartDay : " + mStartDay + ", startDay : " + startDay);
 
         }
 
+        //이전달을 계산하는 함수
         public void setPreviousMonth() {
             mCalendar.add(Calendar.MONTH, -1);
             recalculate();
@@ -288,6 +391,7 @@ public class MainActivity extends AppCompatActivity {
             selectedPosition = -1;
         }
 
+        //다음달을 계산하는 함수
         public void setNextMonth() {
             mCalendar.add(Calendar.MONTH, 1);
             recalculate();
@@ -296,6 +400,7 @@ public class MainActivity extends AppCompatActivity {
             selectedPosition = -1;
         }
 
+        //날짜를 ?
         public void resetDayNumbers() {
             for (int i = 0; i < 42; i++) {
                 // calculate day number
@@ -306,9 +411,11 @@ public class MainActivity extends AppCompatActivity {
 
                 // save as a data item
                 items[i] = new MonthItem(dayNumber);
+
             }
         }
 
+        //요일을 표시하는 함수
         private int getFirstDay(int dayOfWeek) {
             int result = 0;
             if (dayOfWeek == Calendar.SUNDAY) {
@@ -331,33 +438,39 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        //현재 년도를 가져오는
         public int getCurYear() {
             return curYear;
         }
 
+        //현재 월을 가져오는
         public int getCurMonth() {
             return curMonth;
         }
 
 
+        //칼럼의 갯수 지정
         public int getNumColumns() {
             return 7;
         }
 
+        //그리드 뷰의 갯수 지정
         public int getCount() {
             return 7 * 6;
         }
 
+        //
         public Object getItem(int position) {
             return items[position];
         }
 
+        //
         public long getItemId(int position) {
             return position;
         }
 
+        //
         public View getView(int position, View convertView, ViewGroup parent) {
-            Log.d(TAG, "getView(" + position + ") called.");
 
             MonthItemView itemView;
             if (convertView == null) {
@@ -405,8 +518,24 @@ public class MainActivity extends AppCompatActivity {
                 itemView.setBackgroundColor(Color.WHITE);
             }
 
-
-
+            ////////////////////////////////////////////////////////////////
+            if(GirlMonthlList != null) {
+                for (int i = 0; i < GirlMonthlList.size(); i++) {
+                    ExpenseBean.ExpenseSubBean bean = GirlMonthlList.get(i);
+                    if (Integer.parseInt(bean.getDay()) == items[position].getDay()) {
+                        itemView.addText("G:" + bean.getSumMoney());
+                    }
+                }
+            }
+            if(BoyMonthList != null) {
+                for (int i = 0; i < BoyMonthList.size(); i++) {
+                    ExpenseBean.ExpenseSubBean bean = BoyMonthList.get(i);
+                    if (Integer.parseInt(bean.getDay()) == items[position].getDay()) {
+                        itemView.addText("B:" + bean.getSumMoney());
+                    }
+                }
+            }
+            ////////////////////////////////////////////////////////////////
 
             return itemView;
         }
