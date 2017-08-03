@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         super.onResume();
-        new ExpenseMonthTask().execute("http://172.16.8.188:8080/rest/selectExpenseMonthList.do?userId="
+        new ExpenseMonthTask().execute(commonActivity.BASE_URL +"/rest/selectExpenseMonthList.do?userId="
                 + LoginActivity.PuserId + "&date=" + curYear +"."+ (curMonth+1));
 
         MONTH = curMonth;
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new ExpenseMonthTask().execute("http://172.16.8.188:8080/rest/selectExpenseMonthList.do?userId="
+        new ExpenseMonthTask().execute(commonActivity.BASE_URL +"/rest/selectExpenseMonthList.do?userId="
                 + LoginActivity.PuserId + "&date=" + curYear +"."+ (curMonth+1));
 
         MONTH = curMonth;

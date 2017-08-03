@@ -33,10 +33,10 @@ import static org.androidtown.calendar.month.LoginActivity.PuserId;
 
 /*사용내역 상세조회 */
 
-public class ExpenseFirstActivity extends AppCompatActivity {
+public class ExpenseFirstActivity extends commonActivity {
 
     private TextView txtDate, txtTotal01, txtTotal02;
-    private ListView listView01, listView02;
+    public static ListView listView01, listView02;
 
 
     @Override
@@ -73,7 +73,7 @@ public class ExpenseFirstActivity extends AppCompatActivity {
         });
 
         //상세내역을 받아오는 URL
-        new ExpenseTask().execute("http://172.16.8.188:8080/rest/selectExpenseList.do?userId=" + LoginActivity.PuserId + "&date=" + today);
+        new ExpenseTask().execute(commonActivity.BASE_URL +"/rest/selectExpenseList.do?userId=" + LoginActivity.PuserId + "&date=" + today);
 
 
     }//end onCreate
@@ -141,6 +141,8 @@ public class ExpenseFirstActivity extends AppCompatActivity {
                 listView02.setAdapter(adapter02);
 
             }//end if
+
+
         }//end onPostExecute
 
 

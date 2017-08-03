@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.ListMenuItemView;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -37,7 +38,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 /*사용내역등록*/
-public class ExpenseSecond extends AppCompatActivity {
+public class ExpenseSecond extends commonActivity {
 
 
     private EditText mEdtMoney, mEdtDetail,mEdtPlace,mEdtMemo;
@@ -81,6 +82,7 @@ public class ExpenseSecond extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
+
                     }
                 };
                 AlertDialog.Builder builder = new AlertDialog.Builder(ExpenseSecond.this);
@@ -115,7 +117,7 @@ public class ExpenseSecond extends AppCompatActivity {
     //사용내역 추가 Task
     private class expenseInsertTask extends AsyncTask<String, Void, String> {
 
-        public static final String URL_INSERTEXPENSE = "http://172.16.8.188:8080/rest/insertExpense.do";
+        public static final String URL_INSERTEXPENSE = commonActivity.BASE_URL +"/rest/insertExpense.do";
 
         private String Money,Detail,Place,Memo,Date;
 
@@ -176,6 +178,8 @@ public class ExpenseSecond extends AppCompatActivity {
                     if (bean.getResult().equals("ok")) {
                         Toast.makeText(ExpenseSecond.this,"등록을 완료하였습니다.", Toast.LENGTH_SHORT).show();
                         finish();
+                        Intent i = new Intent(ExpenseSecond.this, MainActivity.class);
+                        startActivity(i);
 
                     } else {
                         Toast.makeText(ExpenseSecond.this, bean.getResultMsg(), Toast.LENGTH_SHORT).show();
@@ -185,6 +189,8 @@ public class ExpenseSecond extends AppCompatActivity {
             } catch (Exception e) {
                 Toast.makeText(ExpenseSecond.this, "파싱 실패", Toast.LENGTH_SHORT).show();
             }
+
+
         }//end onPostExecute
     }//end expenseInsertTask
 } //ExpenseSecond class 닫힘
